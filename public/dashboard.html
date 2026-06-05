@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AresLife | Dashboard do Habitat Marciano</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 91, 31, 0.28), transparent 32%),
+        radial-gradient(circle at top right, rgba(96, 165, 250, 0.20), transparent 30%),
+        linear-gradient(135deg, #060816, #111827 52%, #2a0f0a);
+      color: #f8fafc;
+      padding: 28px;
+    }
+
+    .container {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      padding: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(15, 23, 42, 0.82);
+      border-radius: 26px;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin-top: 12px;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .planet {
+      min-width: 138px;
+      height: 138px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, #fed7aa, #fb923c 38%, #9a3412 70%, #431407);
+      box-shadow: 0 0 40px rgba(251, 146, 60, 0.45);
+      position: relative;
+    }
+
+    .planet::after {
+      content: "";
+      position: absolute;
+      width: 180px;
+      height: 34px;
+      border: 5px solid rgba(226, 232, 240, 0.35);
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-radius: 50%;
+      left: -21px;
+      top: 52px;
+      transform: rotate(-16deg);
+    }
+
+    .status-bar {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 20px;
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 20px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #06111f;
+      background: #22c55e;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: currentColor;
+      color: #06111f;
+    }
+
+    .updated {
+      color: #cbd5e1;
+      font-size: 0.95rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 22px;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+    }
+
+    .card span {
+      display: block;
+      color: #94a3b8;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+    }
+
+    .card strong {
+      font-size: 2.1rem;
+    }
+
+    .progress {
+      width: 100%;
+      height: 9px;
+      margin-top: 14px;
+      background: rgba(148, 163, 184, 0.2);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress div {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
+      transition: 0.4s;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .panel {
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(15, 23, 42, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+    }
+
+    .panel h2 {
+      margin-bottom: 14px;
+      font-size: 1.2rem;
+    }
+
+    .bars {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bar-item p {
+      display: flex;
+      justify-content: space-between;
+      color: #cbd5e1;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .bar-track {
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(148, 163, 184, 0.16);
+    }
+
+    .bar-track div {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #fb923c, #facc15, #22c55e);
+      transition: 0.4s;
+    }
+
+    .alert-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .alert {
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: #e2e8f0;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      line-height: 1.45;
+    }
+
+    .crew {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .crew div {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(30, 41, 59, 0.78);
+      text-align: center;
+    }
+
+    .crew strong {
+      display: block;
+      font-size: 1.6rem;
+      margin-top: 6px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    button {
+      border: none;
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      font-weight: 800;
+      color: #0f172a;
+      background: #e2e8f0;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    button.safe { background: #86efac; }
+    button.warning { background: #fde047; }
+    button.critical { background: #fca5a5; }
+
+    .history {
+      max-height: 210px;
+      overflow: auto;
+      display: grid;
+      gap: 8px;
+      padding-right: 6px;
+    }
+
+    .history-item {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(30, 41, 59, 0.65);
+      color: #cbd5e1;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .content { grid-template-columns: 1fr; }
+      .hero { align-items: flex-start; }
+      .planet { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 14px; }
+      .grid, .crew { grid-template-columns: 1fr; }
+      .hero { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>AresLife 🚀</h1>
+        <p>
+          Dashboard do habitat marciano conectado à API REST. A interface exibe temperatura,
+          umidade, luminosidade, oxigênio, energia, alertas, tripulantes e histórico de telemetria.
+        </p>
+      </div>
+      <div class="planet" aria-hidden="true"></div>
+    </section>
+
+    <section class="status-bar">
+      <div id="statusPill" class="status-pill"><span class="dot"></span><span id="statusText">CARREGANDO</span></div>
+      <p class="updated">Última atualização: <span id="ultimaAtualizacao">--</span></p>
+    </section>
+
+    <section class="grid">
+      <article class="card"><span>Temperatura</span><strong id="temperatura">--</strong><div class="progress"><div id="tempProgress"></div></div></article>
+      <article class="card"><span>Umidade</span><strong id="umidade">--</strong><div class="progress"><div id="umidProgress"></div></div></article>
+      <article class="card"><span>Luminosidade</span><strong id="luminosidade">--</strong><div class="progress"><div id="luzProgress"></div></div></article>
+      <article class="card"><span>Oxigênio</span><strong id="oxigenio">--</strong><div class="progress"><div id="o2Progress"></div></div></article>
+      <article class="card"><span>Energia</span><strong id="energia">--</strong><div class="progress"><div id="energiaProgress"></div></div></article>
+    </section>
+
+    <section class="content">
+      <div class="panel">
+        <h2>Indicadores do habitat</h2>
+        <div class="bars">
+          <div class="bar-item"><p><span>Temperatura</span><strong id="barTempText">--</strong></p><div class="bar-track"><div id="barTemp"></div></div></div>
+          <div class="bar-item"><p><span>Oxigênio</span><strong id="barO2Text">--</strong></p><div class="bar-track"><div id="barO2"></div></div></div>
+          <div class="bar-item"><p><span>Energia</span><strong id="barEnergiaText">--</strong></p><div class="bar-track"><div id="barEnergia"></div></div></div>
+          <div class="bar-item"><p><span>Luminosidade</span><strong id="barLuzText">--</strong></p><div class="bar-track"><div id="barLuz"></div></div></div>
+        </div>
+
+        <div class="actions">
+          <button class="safe" onclick="simular('seguro')">Simular seguro</button>
+          <button class="warning" onclick="simular('atencao')">Simular atenção</button>
+          <button class="critical" onclick="simular('critico')">Simular crítico</button>
+        </div>
+      </div>
+
+      <aside class="panel">
+        <h2>Tripulação</h2>
+        <div class="crew">
+          <div>Astronautas<strong id="astronautas">--</strong></div>
+          <div>Turistas<strong id="turistas">--</strong></div>
+          <div>Total<strong id="totalTripulantes">--</strong></div>
+        </div>
+
+        <h2>Alertas ativos</h2>
+        <div id="alertas" class="alert-list"></div>
+      </aside>
+    </section>
+
+    <section class="panel" style="margin-top:18px;">
+      <h2>Histórico de telemetria</h2>
+      <div id="historico" class="history"></div>
+    </section>
+  </main>
+
+  <script>
+    const API = window.location.origin;
+
+    const qs = (id) => document.getElementById(id);
+    const pct = (value, max) => Math.max(0, Math.min(100, (Number(value) / max) * 100));
+    const fmtDate = (iso) => iso ? new Date(iso).toLocaleString("pt-BR") : "--";
+
+    function setProgress(id, value) {
+      qs(id).style.width = `${Math.max(0, Math.min(100, Number(value)))}%`;
+    }
+
+    function setStatus(status) {
+      const pill = qs("statusPill");
+      qs("statusText").textContent = status;
+
+      if (status === "CRITICO") {
+        pill.style.background = "#ef4444";
+        pill.style.color = "#fff";
+      } else if (status === "ATENCAO") {
+        pill.style.background = "#facc15";
+        pill.style.color = "#1f2937";
+      } else {
+        pill.style.background = "#22c55e";
+        pill.style.color = "#06111f";
+      }
+    }
+
+    async function carregarDados() {
+      try {
+        const [habitat, alertas, tripulantes, historico] = await Promise.all([
+          fetch(`${API}/habitat`).then(r => r.json()),
+          fetch(`${API}/alertas`).then(r => r.json()),
+          fetch(`${API}/tripulantes`).then(r => r.json()),
+          fetch(`${API}/historico?limite=8`).then(r => r.json())
+        ]);
+
+        qs("temperatura").textContent = `${habitat.temperatura}°C`;
+        qs("umidade").textContent = `${habitat.umidade}%`;
+        qs("luminosidade").textContent = `${habitat.luminosidade}%`;
+        qs("oxigenio").textContent = `${habitat.oxigenio}%`;
+        qs("energia").textContent = `${habitat.energia}%`;
+        qs("ultimaAtualizacao").textContent = fmtDate(habitat.ultimaAtualizacao);
+
+        setStatus(habitat.status);
+        setProgress("tempProgress", pct(habitat.temperatura, 50));
+        setProgress("umidProgress", habitat.umidade);
+        setProgress("luzProgress", habitat.luminosidade);
+        setProgress("o2Progress", habitat.oxigenio);
+        setProgress("energiaProgress", habitat.energia);
+
+        qs("barTempText").textContent = `${habitat.temperatura}°C`;
+        qs("barO2Text").textContent = `${habitat.oxigenio}%`;
+        qs("barEnergiaText").textContent = `${habitat.energia}%`;
+        qs("barLuzText").textContent = `${habitat.luminosidade}%`;
+        qs("barTemp").style.width = `${pct(habitat.temperatura, 50)}%`;
+        qs("barO2").style.width = `${habitat.oxigenio}%`;
+        qs("barEnergia").style.width = `${habitat.energia}%`;
+        qs("barLuz").style.width = `${habitat.luminosidade}%`;
+
+        qs("astronautas").textContent = tripulantes.astronautas;
+        qs("turistas").textContent = tripulantes.turistas;
+        qs("totalTripulantes").textContent = tripulantes.total;
+
+        qs("alertas").innerHTML = alertas.alertas.map(a => `<div class="alert">${a}</div>`).join("");
+
+        if (!historico.registros.length) {
+          qs("historico").innerHTML = `<div class="history-item">Nenhum dado recebido ainda. Use os botões de simulação ou envie dados pelo endpoint POST /dados.</div>`;
+        } else {
+          qs("historico").innerHTML = historico.registros.reverse().map(item => `
+            <div class="history-item">
+              ${fmtDate(item.timestamp)} — Temp: ${item.temperatura}°C · O2: ${item.oxigenio}% · Energia: ${item.energia}% · Status: ${item.status}
+            </div>
+          `).join("");
+        }
+      } catch (error) {
+        qs("alertas").innerHTML = `<div class="alert">Erro ao conectar com a API. Verifique se o servidor está rodando.</div>`;
+      }
+    }
+
+    async function simular(tipo) {
+      const dados = {
+        seguro: { temperatura: 24, umidade: 40, luminosidade: 24, oxigenio: 54, energia: 39 },
+        atencao: { temperatura: 35, umidade: 50, luminosidade: 60, oxigenio: 75, energia: 65 },
+        critico: { temperatura: 42, umidade: 55, luminosidade: 70, oxigenio: 45, energia: 25 }
+      }[tipo];
+
+      await fetch(`${API}/dados`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+      });
+
+      carregarDados();
+    }
+
+    carregarDados();
+    setInterval(carregarDados, 2000);
+  </script>
+</body>
+</html>
