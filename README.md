@@ -1,10 +1,10 @@
-#  AresLife — API REST + Dashboard IoT
+# AresLife — API REST + Dashboard IoT
 
-> **Projeto IoT AresLife** — API REST e dashboard web para monitoramento de um habitat marciano via ESP32.
+> Projeto IoT AresLife — API REST e dashboard web para monitoramento de um habitat marciano via ESP32.
 
 ---
 
-##  Integrantes
+## Integrantes
 
 | Nome                          | RM        |
 | ----------------------------- | --------- |
@@ -16,7 +16,7 @@
 
 ---
 
-##  Conceito do Projeto
+## Conceito do Projeto
 
 O **AresLife** é um protótipo IoT que representa um habitat marciano, simulando o monitoramento de condições essenciais para a sobrevivência de astronautas e turistas espaciais.
 
@@ -26,7 +26,7 @@ O objetivo é simular desafios reais relacionados à colonização de Marte e ao
 
 ---
 
-##  Visão Geral
+## Visão Geral
 
 A aplicação recebe dados simulados dos sensores do ESP32, como temperatura, umidade, luminosidade, oxigênio e energia, e disponibiliza essas informações por meio de endpoints REST.
 
@@ -42,7 +42,7 @@ A solução é composta por três módulos principais:
 
 ---
 
-##  Arquitetura da Solução
+## Arquitetura da Solução
 
 O fluxo da solução funciona da seguinte forma:
 
@@ -53,12 +53,12 @@ O fluxo da solução funciona da seguinte forma:
 5. O usuário acompanha temperatura, umidade, luminosidade, oxigênio, energia, tripulantes, status e alertas do habitat.
 
 ```txt
-ESP32/Wokwi → API REST Node.js → Dashboard Web
+ESP32/Wokwi -> API REST Node.js -> Dashboard Web
 ```
 
 ---
 
-##  Módulo IoT e Hardware
+## Módulo IoT e Hardware
 
 O módulo IoT representa o habitat marciano por meio de um protótipo com ESP32, sensores e atuadores.
 
@@ -86,7 +86,7 @@ A simulação do circuito pode ser realizada no **Wokwi**, permitindo validar o 
 
 ---
 
-##  Tecnologias
+## Tecnologias
 
 * **ESP32** — microcontrolador utilizado no protótipo IoT;
 * **Wokwi** — simulação do circuito IoT;
@@ -101,7 +101,36 @@ A simulação do circuito pode ser realizada no **Wokwi**, permitindo validar o 
 
 ---
 
-##  Como Rodar o Projeto
+## Como Rodar o Projeto
+
+Antes de executar os comandos, abra o terminal dentro da pasta principal do projeto, onde estão os arquivos `package.json`, `server.js` e a pasta `public`.
+
+Se estiver usando o projeto baixado ou extraído no Windows, acesse a pasta correta com o comando:
+
+```powershell
+cd C:\Users\marin\Downloads\areslife-backend-final\areslife-backend-final
+```
+
+Se o projeto foi clonado do GitHub, entre na pasta onde o repositório foi salvo:
+
+```powershell
+cd caminho-da-pasta-do-projeto
+```
+
+Para conferir se está na pasta correta, execute:
+
+```powershell
+dir
+```
+
+A pasta correta deve conter arquivos como:
+
+```txt
+package.json
+server.js
+public
+README.md
+```
 
 ### 1. Instalar dependências
 
@@ -127,9 +156,15 @@ O servidor estará disponível em:
 http://localhost:3000
 ```
 
+Para acessar o dashboard, utilize:
+
+```txt
+http://localhost:3000/dashboard
+```
+
 ---
 
-##  Dashboard Visual
+## Dashboard Visual
 
 Além dos endpoints JSON, a aplicação possui um dashboard web para visualização dos dados do habitat.
 
@@ -170,7 +205,7 @@ O objetivo do dashboard é transformar os dados recebidos da API em informaçõe
 
 ---
 
-##  Endpoints da API
+## Endpoints da API
 
 ### `GET /habitat`
 
@@ -211,16 +246,16 @@ Retorna os alertas ativos com base no estado atual do habitat.
 
 ### Regras de Alerta
 
-| Condição                  | Alerta gerado                             |
-| ------------------------- | ----------------------------------------- |
-| Temperatura ≥ 40°C        | Risco crítico de superaquecimento         |
-| 30°C ≤ Temperatura < 40°C | Temperatura elevada — atenção recomendada |
-| Oxigênio < 50%            | Nível de oxigênio crítico                 |
-| Oxigênio < 65%            | Oxigênio abaixo do ideal                  |
-| Energia < 30%             | Reserva de energia crítica                |
-| Energia < 50%             | Energia abaixo de 50%                     |
-| Umidade > 80%             | Umidade excessiva                         |
-| Umidade < 20%             | Umidade muito baixa                       |
+| Condição                   | Alerta gerado                             |
+| -------------------------- | ----------------------------------------- |
+| Temperatura >= 40°C        | Risco crítico de superaquecimento         |
+| 30°C <= Temperatura < 40°C | Temperatura elevada — atenção recomendada |
+| Oxigênio < 50%             | Nível de oxigênio crítico                 |
+| Oxigênio < 65%             | Oxigênio abaixo do ideal                  |
+| Energia < 30%              | Reserva de energia crítica                |
+| Energia < 50%              | Energia abaixo de 50%                     |
+| Umidade > 80%              | Umidade excessiva                         |
+| Umidade < 20%              | Umidade muito baixa                       |
 
 ---
 
@@ -285,11 +320,11 @@ Retorna apenas o status resumido do habitat.
 
 ### Possíveis valores de `status`
 
-| Status    | Condição                  |
-| --------- | ------------------------- |
-| `SEGURO`  | Temperatura < 30°C        |
-| `ATENCAO` | 30°C ≤ Temperatura < 40°C |
-| `CRITICO` | Temperatura ≥ 40°C        |
+| Status    | Condição                   |
+| --------- | -------------------------- |
+| `SEGURO`  | Temperatura < 30°C         |
+| `ATENCAO` | 30°C <= Temperatura < 40°C |
+| `CRITICO` | Temperatura >= 40°C        |
 
 ---
 
@@ -358,7 +393,7 @@ Atualiza o número de tripulantes no habitat.
 
 ---
 
-##  Integração ESP32 → API
+## Integração ESP32 para API
 
 O endpoint responsável por receber os dados do ESP32 é:
 
@@ -396,7 +431,7 @@ void enviarDados(float temp, float umid, int luzPerc, int oxigenio, int energia)
     payload += "}";
 
     int httpCode = http.POST(payload);
-    Serial.print("POST /dados → HTTP ");
+    Serial.print("POST /dados -> HTTP ");
     Serial.println(httpCode);
 
     http.end();
@@ -408,7 +443,7 @@ void enviarDados(float temp, float umid, int luzPerc, int oxigenio, int energia)
 
 ---
 
-##  Observação sobre Wokwi e API Local
+## Observação sobre Wokwi e API Local
 
 No Wokwi, a simulação roda em um ambiente de rede isolado e normalmente não acessa diretamente uma API local em `localhost` ou no IP privado do computador.
 
@@ -433,7 +468,7 @@ const char* serverUrl = "http://192.168.1.152:3000/dados";
 
 ---
 
-##  Como Testar
+## Como Testar
 
 Com o servidor rodando, acesse o dashboard:
 
@@ -467,32 +502,32 @@ Também é possível testar diretamente pelo dashboard usando os botões de simu
 
 ---
 
-##  Vídeo Demonstrativo
+## Vídeo Demonstrativo
 
 O vídeo demonstrativo apresenta o funcionamento do projeto AresLife, mostrando o dashboard web consumindo os dados da API REST e exibindo os indicadores do habitat marciano.
 
 Durante a demonstração, são apresentados os estados **seguro**, **atenção** e **crítico**, além dos alertas ativos, histórico de telemetria e endpoints JSON da API.
 
- **Link do vídeo:**  
+**Link do vídeo:**
 [Assistir ao vídeo demonstrativo](https://youtu.be/1XyA26oryxM)
 
 ---
 
-##  Estrutura do Projeto
+## Estrutura do Projeto
 
 ```txt
 areslife-backend/
 ├── public/
-│   └── dashboard.html      ← Interface web do dashboard
-├── server.js               ← API principal com todos os endpoints
-├── package.json            ← Dependências e scripts
-├── package-lock.json       ← Controle das versões instaladas
-└── README.md               ← Documentação do projeto
+│   └── dashboard.html      <- Interface web do dashboard
+├── server.js               <- API principal com todos os endpoints
+├── package.json            <- Dependências e scripts
+├── package-lock.json       <- Controle das versões instaladas
+└── README.md               <- Documentação do projeto
 ```
 
 ---
 
-##  Status da Entrega
+## Status da Entrega
 
 * Protótipo IoT com ESP32 simulado;
 * API REST com endpoints JSON;
