@@ -1,10 +1,10 @@
-# 🚀 AresLife — Backend API REST + Dashboard
+#  AresLife — API REST + Dashboard IoT
 
 > **Projeto IoT AresLife** — API REST e dashboard web para monitoramento de um habitat marciano via ESP32.
 
 ---
 
-## Integrantes
+##  Integrantes
 
 | Nome                          | RM        |
 | ----------------------------- | --------- |
@@ -16,39 +16,92 @@
 
 ---
 
-## 🌌 Conceito do Projeto
+##  Conceito do Projeto
 
-O AresLife é um protótipo IoT que representa um habitat marciano, monitorando condições essenciais para a sobrevivência de astronautas e turistas espaciais.
+O **AresLife** é um protótipo IoT que representa um habitat marciano, simulando o monitoramento de condições essenciais para a sobrevivência de astronautas e turistas espaciais.
 
-O ESP32 coleta dados simulados por sensores, envia essas informações para uma API REST e o dashboard web exibe os indicadores de forma visual, permitindo acompanhar o estado geral do habitat.
+A solução utiliza um **ESP32** como base do protótipo, sensores para coleta de dados, uma **API REST** para recebimento e processamento das informações e um **dashboard web** para visualização dos indicadores do habitat.
 
----
-
-## 📋 Visão Geral
-
-Esta API recebe dados dos sensores do ESP32, como temperatura, umidade, luminosidade, oxigênio e energia, e disponibiliza essas informações via endpoints REST para o dashboard web.
-
-A solução está dividida em três partes:
-
-| Parte | Responsável | Entrega |
-|-------|-------------|---------|
-| Parte 1 — IoT/Hardware | Integrante 1 | ESP32, sensores, LEDs, OLED e simulação no Wokwi |
-| Parte 2 — Backend API | Integrante 2 | API REST, endpoints JSON e regras de alerta |
-| Parte 3 — Dashboard, Documentação e Apresentação** | Integrante 3 | Interface web, README, vídeo e apresentação |
+O objetivo é simular desafios reais relacionados à colonização de Marte e ao turismo espacial, como controle de temperatura, oxigênio, energia, umidade, luminosidade e alertas de risco.
 
 ---
 
-## 🛠️ Tecnologias
+##  Visão Geral
 
-- **Node.js** (v16+)
-- **Express** — framework HTTP
-- **CORS** — liberação de acesso para o dashboard
-- **HTML, CSS e JavaScript** — dashboard web
-- **ESP32/Wokwi** — simulação IoT
+A aplicação recebe dados simulados dos sensores do ESP32, como temperatura, umidade, luminosidade, oxigênio e energia, e disponibiliza essas informações por meio de endpoints REST.
+
+Esses dados são consumidos por um dashboard web, que exibe os indicadores do habitat de forma visual e permite acompanhar o status geral do ambiente em tempo real.
+
+A solução é composta por três módulos principais:
+
+| Módulo           | Descrição                                                                           |
+| ---------------- | ----------------------------------------------------------------------------------- |
+| IoT e Hardware   | Simulação do habitat marciano com ESP32, sensores, LEDs, display OLED e Wokwi       |
+| Backend API REST | Recebimento dos dados do ESP32, endpoints JSON e regras de alerta                   |
+| Dashboard Web    | Interface visual para monitoramento dos indicadores, alertas e histórico do habitat |
 
 ---
 
-## ⚙️ Como rodar
+##  Arquitetura da Solução
+
+O fluxo da solução funciona da seguinte forma:
+
+1. O ESP32 realiza a leitura dos sensores no ambiente simulado;
+2. Os dados são enviados para a API REST por meio do endpoint `POST /dados`;
+3. A API processa as informações e aplica as regras de alerta;
+4. O dashboard consome os endpoints da API e exibe os dados em tempo real;
+5. O usuário acompanha temperatura, umidade, luminosidade, oxigênio, energia, tripulantes, status e alertas do habitat.
+
+```txt
+ESP32/Wokwi → API REST Node.js → Dashboard Web
+```
+
+---
+
+##  Módulo IoT e Hardware
+
+O módulo IoT representa o habitat marciano por meio de um protótipo com ESP32, sensores e atuadores.
+
+### Entradas
+
+* **Sensor DHT22**: mede temperatura e umidade;
+* **Sensor LDR ou botão de emergência**: simula luminosidade ou acionamento manual de alerta.
+
+### Saídas
+
+* **LED verde**: indica condições normais do habitat;
+* **LED vermelho**: indica situação de risco ou alerta.
+
+### Interface Local
+
+O protótipo também utiliza um display OLED para exibir informações importantes do habitat, como:
+
+* Temperatura;
+* Nível de recursos;
+* Status geral do ambiente.
+
+### Simulação
+
+A simulação do circuito pode ser realizada no **Wokwi**, permitindo validar o funcionamento dos sensores, LEDs, display OLED e comunicação Wi-Fi do ESP32.
+
+---
+
+##  Tecnologias
+
+* **ESP32** — microcontrolador utilizado no protótipo IoT;
+* **Wokwi** — simulação do circuito IoT;
+* **DHT22** — sensor de temperatura e umidade;
+* **LDR/Botão** — entrada para luminosidade ou alerta manual;
+* **LEDs** — indicação visual de status;
+* **OLED** — interface local do habitat;
+* **Node.js** — ambiente de execução JavaScript;
+* **Express** — framework para criação da API REST;
+* **CORS** — liberação de acesso para o dashboard;
+* **HTML, CSS e JavaScript** — desenvolvimento do dashboard web.
+
+---
+
+##  Como Rodar o Projeto
 
 ### 1. Instalar dependências
 
@@ -59,10 +112,12 @@ npm install
 ### 2. Iniciar o servidor
 
 ```bash
-# Produção
 npm start
+```
 
-# Desenvolvimento
+Para desenvolvimento, também é possível utilizar:
+
+```bash
 npm run dev
 ```
 
@@ -74,9 +129,9 @@ http://localhost:3000
 
 ---
 
-## 📊 Dashboard Visual — Parte 3
+##  Dashboard Visual
 
-Além dos endpoints JSON, a API possui um dashboard web para visualização dos dados do habitat.
+Além dos endpoints JSON, a aplicação possui um dashboard web para visualização dos dados do habitat.
 
 Com o servidor rodando, acesse:
 
@@ -86,15 +141,15 @@ http://localhost:3000/dashboard
 
 O dashboard exibe:
 
-- Temperatura;
-- Umidade;
-- Luminosidade;
-- Oxigênio;
-- Energia;
-- Status geral do habitat;
-- Alertas ativos;
-- Tripulantes;
-- Histórico de telemetria.
+* Temperatura;
+* Umidade;
+* Luminosidade;
+* Oxigênio;
+* Energia;
+* Status geral do habitat;
+* Alertas ativos;
+* Tripulantes;
+* Histórico de telemetria.
 
 O painel também possui botões de simulação que enviam dados para o endpoint `POST /dados`, representando o mesmo formato JSON enviado pelo ESP32.
 
@@ -102,20 +157,20 @@ O painel também possui botões de simulação que enviam dados para o endpoint 
 
 O objetivo do dashboard é transformar os dados recebidos da API em informações visuais, facilitando o acompanhamento das condições do habitat marciano e permitindo identificar rapidamente situações de risco.
 
-### Funcionalidades da Parte 3
+### Funcionalidades do Dashboard
 
-- Consumo dos endpoints da API REST;
-- Exibição dos dados em tempo real;
-- Apresentação visual dos indicadores do habitat;
-- Exibição de alertas de risco;
-- Histórico dos últimos registros;
-- Botões para simular estados seguro, atenção e crítico;
-- Organização da documentação no README;
-- Apoio para gravação do vídeo e apresentação final.
+* Consumo dos endpoints da API REST;
+* Exibição dos dados do habitat;
+* Apresentação visual dos indicadores;
+* Exibição do status geral;
+* Exibição de alertas de risco;
+* Histórico dos últimos registros;
+* Botões para simular estados seguro, atenção e crítico;
+* Visualização da quantidade de astronautas e turistas.
 
 ---
 
-## 📡 Endpoints da API
+##  Endpoints da API
 
 ### `GET /habitat`
 
@@ -154,18 +209,18 @@ Retorna os alertas ativos com base no estado atual do habitat.
 }
 ```
 
-**Regras de alerta:**
+### Regras de Alerta
 
-| Condição | Alerta gerado |
-|----------|--------------|
-| Temperatura ≥ 40°C | Risco crítico de superaquecimento |
+| Condição                  | Alerta gerado                             |
+| ------------------------- | ----------------------------------------- |
+| Temperatura ≥ 40°C        | Risco crítico de superaquecimento         |
 | 30°C ≤ Temperatura < 40°C | Temperatura elevada — atenção recomendada |
-| Oxigênio < 50% | Nível de oxigênio crítico |
-| Oxigênio < 65% | Oxigênio abaixo do ideal |
-| Energia < 30% | Reserva de energia crítica |
-| Energia < 50% | Energia abaixo de 50% |
-| Umidade > 80% | Umidade excessiva |
-| Umidade < 20% | Umidade muito baixa |
+| Oxigênio < 50%            | Nível de oxigênio crítico                 |
+| Oxigênio < 65%            | Oxigênio abaixo do ideal                  |
+| Energia < 30%             | Reserva de energia crítica                |
+| Energia < 50%             | Energia abaixo de 50%                     |
+| Umidade > 80%             | Umidade excessiva                         |
+| Umidade < 20%             | Umidade muito baixa                       |
 
 ---
 
@@ -189,9 +244,9 @@ Retorna a tripulação atual do habitat.
 
 Retorna os últimos registros de telemetria, com limite máximo de 50 registros.
 
-| Parâmetro | Tipo | Padrão | Descrição |
-|-----------|------|--------|-----------|
-| `limite` | int | 20 | Quantidade de registros retornados |
+| Parâmetro | Tipo | Padrão | Descrição                          |
+| --------- | ---- | ------ | ---------------------------------- |
+| `limite`  | int  | 20     | Quantidade de registros retornados |
 
 **Resposta:**
 
@@ -228,13 +283,13 @@ Retorna apenas o status resumido do habitat.
 }
 ```
 
-**Possíveis valores de `status`:**
+### Possíveis valores de `status`
 
-| Status | Condição |
-|--------|----------|
-| `SEGURO` | Temperatura < 30°C |
+| Status    | Condição                  |
+| --------- | ------------------------- |
+| `SEGURO`  | Temperatura < 30°C        |
 | `ATENCAO` | 30°C ≤ Temperatura < 40°C |
-| `CRITICO` | Temperatura ≥ 40°C |
+| `CRITICO` | Temperatura ≥ 40°C        |
 
 ---
 
@@ -242,7 +297,7 @@ Retorna apenas o status resumido do habitat.
 
 Recebe os dados dos sensores do ESP32 e atualiza o estado do habitat.
 
-**Body (JSON):**
+**Body JSON:**
 
 ```json
 {
@@ -254,7 +309,7 @@ Recebe os dados dos sensores do ESP32 e atualiza o estado do habitat.
 }
 ```
 
-> O campo `temperatura` é obrigatório. Os demais são opcionais; se não enviados, mantêm o valor anterior.
+> O campo `temperatura` é obrigatório. Os demais campos são opcionais; se não forem enviados, mantêm o valor anterior.
 
 **Resposta:**
 
@@ -279,7 +334,7 @@ Recebe os dados dos sensores do ESP32 e atualiza o estado do habitat.
 
 Atualiza o número de tripulantes no habitat.
 
-**Body (JSON):**
+**Body JSON:**
 
 ```json
 {
@@ -303,7 +358,7 @@ Atualiza o número de tripulantes no habitat.
 
 ---
 
-## 🔌 Integração ESP32 → API
+##  Integração ESP32 → API
 
 O endpoint responsável por receber os dados do ESP32 é:
 
@@ -353,7 +408,7 @@ void enviarDados(float temp, float umid, int luzPerc, int oxigenio, int energia)
 
 ---
 
-## ⚠️ Observação sobre Wokwi e API Local
+##  Observação sobre Wokwi e API Local
 
 No Wokwi, a simulação roda em um ambiente de rede isolado e normalmente não acessa diretamente uma API local em `localhost` ou no IP privado do computador.
 
@@ -378,9 +433,9 @@ const char* serverUrl = "http://192.168.1.152:3000/dados";
 
 ---
 
-## 🧪 Como testar
+##  Como Testar
 
-Com o servidor rodando, acesse:
+Com o servidor rodando, acesse o dashboard:
 
 ```txt
 http://localhost:3000/dashboard
@@ -396,7 +451,7 @@ http://localhost:3000/historico
 http://localhost:3000/status
 ```
 
-Para testar o envio de dados:
+Para testar o envio de dados manualmente:
 
 ```bash
 curl -X POST http://localhost:3000/dados \
@@ -404,9 +459,26 @@ curl -X POST http://localhost:3000/dados \
 -d "{\"temperatura\":24,\"umidade\":40,\"luminosidade\":24,\"oxigenio\":54,\"energia\":39}"
 ```
 
+Também é possível testar diretamente pelo dashboard usando os botões de simulação:
+
+* Simular estado seguro;
+* Simular estado de atenção;
+* Simular estado crítico.
+
 ---
 
-## 🗂️ Estrutura do Projeto
+##  Vídeo Demonstrativo
+
+O vídeo demonstrativo apresenta o funcionamento do projeto AresLife, mostrando o dashboard web consumindo os dados da API REST e exibindo os indicadores do habitat marciano.
+
+Durante a demonstração, são apresentados os estados **seguro**, **atenção** e **crítico**, além dos alertas ativos, histórico de telemetria e endpoints JSON da API.
+
+ **Link do vídeo:**  
+[Assistir ao vídeo demonstrativo](https://youtu.be/1XyA26oryxM)
+
+---
+
+##  Estrutura do Projeto
 
 ```txt
 areslife-backend/
@@ -418,6 +490,18 @@ areslife-backend/
 └── README.md               ← Documentação do projeto
 ```
 
+---
 
+##  Status da Entrega
+
+* Protótipo IoT com ESP32 simulado;
+* API REST com endpoints JSON;
+* Regras de alerta implementadas;
+* Dashboard web para visualização dos dados;
+* Testes de endpoints realizados;
+* Documentação organizada no README;
+* Apresentação e vídeo demonstrativo da solução.
+
+---
 
 *AresLife — Habitat Marciano · Projeto IoT com ESP32*
